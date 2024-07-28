@@ -6,7 +6,9 @@ export async function User(req, res) {
   try {
     const { name, email, password } = req.body;
 
-    // Create a new user
+    console.log("User creation started");
+    const start = Date.now();
+
     const newUser = await prisma.user.create({
       data: {
         name,
@@ -15,8 +17,8 @@ export async function User(req, res) {
       },
     });
 
-    // Log the name of the new user
-    console.log(name);
+    const end = Date.now();
+    console.log(`User created in ${end - start}ms`);
 
     // Return a success response
     return res.json({
