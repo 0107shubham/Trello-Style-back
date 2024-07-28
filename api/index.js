@@ -1,5 +1,7 @@
-const express = require("express");
+import express from "express";
+import route from "../Route/routes.js"; // Updated import statement
 const app = express();
+
 const port = process.env.PORT || 3000;
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -15,15 +17,17 @@ app.get("/status:name", (req, res) => {
 
   res.send(`name, ${name}!`);
 });
-app.post("/user", (req, res) => {
-  const { user, password } = req.body;
+// app.post("/user", (req, res) => {
+//   const { user, password } = req.body;
 
-  res.json({ message: "woking", data: { user, password } });
-  console.log(user, "username");
-});
+//   res.json({ message: "woking", data: { user, password } });
+//   console.log(user, "username");
+// });
+
+app.use("/", route);
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });
 
-module.exports = app;
+export default app;
