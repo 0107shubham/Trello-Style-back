@@ -1,6 +1,8 @@
 const express = require("express");
 const app = express();
 const port = process.env.PORT || 3000;
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 app.get("/", (req, res) => {
   res.send("Hello, World for shbham!");
@@ -12,6 +14,12 @@ app.get("/status:name", (req, res) => {
   const { name } = req.params;
 
   res.send(`name, ${name}!`);
+});
+app.post("/user", (req, res) => {
+  const { user, password } = req.body;
+
+  res.json({ message: "woking", data: { user, password } });
+  console.log(user, "username");
 });
 
 app.listen(port, () => {
