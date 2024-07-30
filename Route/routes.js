@@ -12,8 +12,8 @@ route.post("/signup", signup);
 route.post("/signin", signin);
 
 route.post("/post", createPost);
-route.delete("/posts/:id", deletePost);
-route.get("/posts/:id", getPost);
-route.put("/posts/:id", updatePost);
+route.post("/deletePost", deletePost);
+route.post("/getposts", getPost);
+route.post("/updatePost", updatePost);
 
 export default route;

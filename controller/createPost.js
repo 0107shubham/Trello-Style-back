@@ -3,28 +3,28 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 export const createPost = async (req, res) => {
+  const { title, description, status, priority, deadline, categoryId } =
+    req.body;
+
   try {
-    const { title, description, status, priority, deadline, authorId } =
-      req.body;
-    const newPost = await prisma.post.create({
+    const post = await prisma.post.create({
       data: {
         title,
         description,
         status,
         priority,
-        deadline: new Date(deadline),
-        authorId,
+        deadline,
+        category: {
+          connect: {
+            id: categoryId,
+          },
+        },
       },
     });
-    return res.json({
-      message: "Post created successfully",
-      data: newPost,
-    });
+    res.json({ status: "Post created", data: post });
   } catch (error) {
-    console.error("Error creating post:", error);
-    return res.status(500).json({
-      message: "Internal Server Error",
-      error: error.message,
-    });
+    res
+      .status(500)
+      .json({ message: "Post creation failed", error: error.message });
   }
 };

@@ -3,25 +3,31 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 export const getPost = async (req, res) => {
+  const { userId } = req.body;
+  // console.log(userId);
+  // res.json({ message: "hii", value: userId });
+
   try {
-    const { userId } = req.params;
-    const posts = await prisma.post.findMany({
-      where: { authorId: userId },
+    const userWithPostsAndCategories = await prisma.user.findUnique({
+      where: { id: userId },
+      include: {
+        categories: {
+          include: {
+            posts: true, // Include posts for each category
+          },
+        },
+      },
     });
-    if (!posts || posts.length === 0) {
-      return res.status(404).json({
-        message: "No posts found for this user",
-      });
-    }
-    return res.json({
-      message: "Posts retrieved successfully",
-      data: posts,
-    });
+
+    res.json({ message: "Sucess", Data: userWithPostsAndCategories });
+
+    console.log(
+      "User with Posts and Categories:",
+      JSON.stringify(userWithPostsAndCategories, null, 2)
+    );
   } catch (error) {
-    console.error("Error retrieving posts:", error);
-    return res.status(500).json({
-      message: "Internal Server Error",
-      error: error.message,
-    });
+    console.error("Error retrieving data:", error);
+  } finally {
+    await prisma.$disconnect();
   }
 };

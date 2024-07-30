@@ -1,20 +1,19 @@
 import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
+
+// Function to delete a post
 export const deletePost = async (req, res) => {
+  const { id } = req.body; // Post ID from the URL
+
   try {
-    const { id } = req.params;
     await prisma.post.delete({
-      where: { id },
+      where: { id: id }, // ID of the post to delete
     });
-    return res.json({
-      message: "Post deleted successfully",
-    });
+    res.json({ status: "Post deleted" });
   } catch (error) {
-    console.error("Error deleting post:", error);
-    return res.status(500).json({
-      message: "Internal Server Error",
-      error: error.message,
-    });
+    res
+      .status(500)
+      .json({ message: "Post deletion failed", error: error.message });
   }
 };
