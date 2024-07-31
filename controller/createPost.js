@@ -9,11 +9,11 @@ export const createPost = async (req, res) => {
   try {
     const post = await prisma.post.create({
       data: {
-        title,
-        description,
-        status,
-        priority,
-        deadline,
+        title: title || "Title",
+        description: description || "Description",
+        status: status || "",
+        priority: priority || "LOW",
+        deadline: deadline || new Date(),
         category: {
           connect: {
             id: categoryId,
