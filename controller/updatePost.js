@@ -15,7 +15,7 @@ export const updatePost = async (req, res) => {
         description,
         status,
         priority,
-        deadline: new Date(deadline), // Convert to Date object
+        deadline, // Convert to Date object
         categoryId,
       },
     });
