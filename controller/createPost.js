@@ -9,11 +9,11 @@ export const createPost = async (req, res) => {
   try {
     const post = await prisma.post.create({
       data: {
-        title: title || "Title",
-        description: description || "Description",
-        status: status || "",
-        priority: priority || "LOW",
-        deadline: deadline || new Date(),
+        title,
+        description,
+        status,
+        priority,
+        deadline,
         category: {
           connect: {
             id: categoryId,
@@ -23,8 +23,10 @@ export const createPost = async (req, res) => {
     });
     res.json({ status: "Post created", data: post });
   } catch (error) {
-    res
-      .status(500)
-      .json({ message: "Post creation failed", error: error.message });
+    res.status(500).json({
+      message: "Post creation failed",
+      error: error.message,
+      data: req.body,
+    });
   }
 };
