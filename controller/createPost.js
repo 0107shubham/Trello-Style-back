@@ -10,7 +10,6 @@ export const createPost = async (req, res) => {
       data: {
         title,
         description,
-
         priority,
         deadline,
         category: {
