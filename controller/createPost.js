@@ -3,15 +3,14 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 export const createPost = async (req, res) => {
-  const { title, description, status, priority, deadline, categoryId } =
-    req.body;
+  const { title, description, priority, deadline, categoryId } = req.body;
 
   try {
     const post = await prisma.post.create({
       data: {
         title,
         description,
-        status,
+
         priority,
         deadline,
         category: {

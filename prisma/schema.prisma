@@ -30,12 +30,12 @@ model Category {
 }
 
 model Post {
-  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  id          String  @id @default(auto()) @map("_id") @db.ObjectId
   title       String
   description String?
-  status      String
-  priority    String
-  deadline    DateTime
-  categoryId  String   @db.ObjectId
-  category    Category @relation(fields: [categoryId], references: [id])
+
+  priority   String
+  deadline   DateTime
+  categoryId String   @db.ObjectId
+  category   Category @relation(fields: [categoryId], references: [id])
 }
