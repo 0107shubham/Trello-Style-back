@@ -7,10 +7,10 @@ export const deletePost = async (req, res) => {
   const { id } = req.body; // Post ID from the URL
 
   try {
-    await prisma.post.delete({
+    const deletedPost = await prisma.post.delete({
       where: { id: id }, // ID of the post to delete
     });
-    res.json({ status: "Post deleted" });
+    res.json({ status: "Post updated", data: deletedPost });
   } catch (error) {
     res
       .status(500)
